@@ -28,6 +28,16 @@ function sendRequest(endpoint, options) {
 	});
 }
 
+function wrapRequest(endpoint, options, cb) {
+	if (cb) {
+		sendRequest(endpoint, options).then(function (res) {
+			cb(res);
+		});
+	} else {
+		return sendRequest(endpoint, options);
+	}
+}
+
 var Trellode = (function () {
 	function Trellode(key, token) {
 		_classCallCheck(this, Trellode);
@@ -43,9 +53,9 @@ var Trellode = (function () {
 		}
 	}, {
 		key: 'getBoards',
-		value: function getBoards(memberId) {
+		value: function getBoards(memberId, cb) {
 			var options = { method: 'GET', query: this.queryOptions() };
-			return sendRequest('/1/members/' + memberId + '/boards', options);
+			return wrapRequest('/1/members/' + memberId + '/boards', options, cb);
 		}
 	}]);
 
