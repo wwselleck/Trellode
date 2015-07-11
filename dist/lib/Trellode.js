@@ -1,8 +1,6 @@
-'use strict';
+/** @module Trellode */
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
+'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -11,12 +9,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var request = require('request').defaults({ baseUrl: 'https://api.trello.com' });
 var Promise = require('promise');
 
-function sendRequest(endpoint, options) {
+/**
+ * @param  {string} method - HTTP Method
+ * @param  {string} endpoint - Endpoint for API
+ * @param  {options} options - Optional options for request
+ * @return {Promise} 
+ */
+function sendRequest(method, endpoint, options) {
   return new Promise(function (resolve, reject) {
     request({
       uri: endpoint,
-      method: options.method,
-      qs: options.query,
+      method: method,
+      qs: options,
       json: true
     }, function (err, response, body) {
       if (err) {
@@ -27,15 +31,43 @@ function sendRequest(endpoint, options) {
   });
 }
 
-function wrapRequest(endpoint, options, cb) {
+function wrapRequest(method, endpoint, options, cb) {
   if (cb) {
-    sendRequest(endpoint, options).then(function (res) {
-      cb(res);
-    });
+    sendRequest(method, endpoint, options).then(cb);
   } else {
-    return sendRequest(endpoint, options);
+    return sendRequest(method, endpoint, options);
   }
 }
+
+function mergeOptions(obj1, obj2) {
+  var ret = {};
+  for (var attrname in obj1) {
+    ret[attrname] = obj1[attrname];
+  }
+  for (var attrname in obj2) {
+    ret[attrname] = obj2[attrname];
+  }
+  return ret;
+}
+
+function generateOptionsAndCallback(options, callback) {
+  var ret = {};
+
+  if (typeof options === 'object') {
+    ret.options = options;
+    if (cb) {
+      ret.callback = callback;
+    }
+  } else {
+    if (typeof options === 'function') {
+      ret.callback = options;
+    }
+    ret.options = {};
+  }
+  return ret;
+}
+
+/** @class  */
 
 var Trellode = (function () {
   function Trellode(key, token) {
@@ -51,15 +83,17 @@ var Trellode = (function () {
       return { key: this.key, token: this.token };
     }
   }, {
+    key: 'createBoard',
+    value: function createBoard(name, options, callback) {}
+  }, {
     key: 'getBoards',
-    value: function getBoards(memberId, cb) {
-      var options = { method: 'GET', query: this.queryOptions() };
-      return wrapRequest('/1/members/' + memberId + '/boards', options, cb);
+    value: function getBoards(memberId, options, callback) {
+      var generatedParams = generateOptionsAndCallback(options, callback);
+      return wrapRequest('GET', '/1/members/' + memberId + '/boards', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }]);
 
   return Trellode;
 })();
 
-exports['default'] = Trellode;
-module.exports = exports['default'];
+module.exports = Trellode;
