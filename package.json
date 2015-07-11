@@ -1,0 +1,8 @@
+{
+  "name": "Trellode",
+  "version": "0.0.0",
+  "dependencies": {
+    "promise": "^7.0.3",
+    "request": "^2.58.0"
+  }
+}
