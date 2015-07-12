@@ -1,7 +1,7 @@
 # Trellode
 [![Build Status](https://travis-ci.org/wwselleck/Trellode.svg?branch=master)](https://travis-ci.org/wwselleck/Trellode)
 
-Interestingly enough, Trello has a Trello board for development of the Trello API](https://trello.com/b/cI66RoQS/trello-public-api). 
+[Interestingly enough, Trello has a Trello board for development of the Trello API](https://trello.com/b/cI66RoQS/trello-public-api). 
 
 You can view the Trello API documentation [here](https://trello.com/docs/). It's main use for you will be seeing what options you can specify if it's not already documented here.
 
