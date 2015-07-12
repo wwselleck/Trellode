@@ -8,5 +8,5 @@ node_js:
   - "iojs"
   - "iojs-v1.0.4"
 before_install:
-  - npm update -g npm
+  - npm install -g npm
 script: node index.js
