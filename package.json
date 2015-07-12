@@ -1,6 +1,7 @@
 {
   "name": "Trellode",
   "version": "0.0.0",
+  "main": "index.js",
   "dependencies": {
     "promise": "^7.0.3",
     "request": "^2.58.0"
