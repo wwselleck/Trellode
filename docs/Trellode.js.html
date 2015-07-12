@@ -107,29 +107,120 @@ function generateOptionsAndCallback(options, callback){
   return ret;
 }
 
-/**
- * Trellode class
- * @class
- */
+
 export default class Trellode{
+  /**
+   * @module  Trellode
+   * @constructs Trellode
+   * @param  {string} key - Trello API key
+   * @param  {string} token - Access token
+   * @return {Trellode}
+   */
   constructor(key, token){
     this.key = key;
     this.token = token;
   }
-  
+
   queryOptions(){
     return {key: this.key, token: this.token};
   }
 
-  createBoard(name, options, callback ){
-    
+  /*///////////////////////////////////////////////////
+          __  __                _                   
+         |  \/  |              | |                  
+         | \  / | ___ _ __ ___ | |__   ___ _ __ ___ 
+         | |\/| |/ _ \ '_ ` _ \| '_ \ / _ \ '__/ __|
+         | |  | |  __/ | | | | | |_) |  __/ |  \__ \
+         |_|  |_|\___|_| |_| |_|_.__/ \___|_|  |___/
+                                  
+   *///////////////////////////////////////////////////
+  
+  /**
+   * @memberof Trellode
+   * @function getMemberByIdOrUsername
+   * @param  {string} idOrUsername - The ID or Username of the member
+   * @param  {object} [options]
+   * @param  {Function} [callback]
+   * @return {Promise|undefined}
+   */
+  getMemberByIdOrUsername(idOrUsername, options, callback){
+    let generatedParams = generateOptionsAndCallback(options, callback);
+    return wrapRequest('GET', '/1/members/' + idOrUsername, mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
   }
 
-  getBoards(memberId, options, callback){
+  getBoards(options, callback){
+    return getBoardsOfMember('me', options, callback);
+  }
+
+  getBoardsOfMember(memberId, options, callback){
     let generatedParams = generateOptionsAndCallback(options, callback);
     return wrapRequest('GET', '/1/members/' + memberId + '/boards', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
   }
 
+  createBoard(name, options, callback ){
+    let generatedParams = generateOptionsAndCallback(options, callback);
+    generatedParams.options.name = name;
+    return wrapRequest('POST', '/1/boards', mergeOptions(this.queryOptions, generatedParams.options), generatedParams.callback);
+  }
+  /*///////////////////////////////////////////////////
+          ____                      _     
+         |  _ \                    | |    
+         | |_) | ___   __ _ _ __ __| |___ 
+         |  _ &lt; / _ \ / _` | '__/ _` / __|
+         | |_) | (_) | (_| | | | (_| \__ \
+         |____/ \___/ \__,_|_|  \__,_|___/
+                                  
+   *///////////////////////////////////////////////////
+
+  getListsOfBoard(boardId, options, callback){
+    let generatedParams = generateOptionsAndCallback(options, callback);
+    return wrapRequest('GET', '/1/boards/' + boardId + '/lists', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+  }
+
+  getCardsOfBoard(boardId, options, callback){
+    let generatedParams = generateOptionsAndCallback(options, callback);
+    return wrapRequest('GET', '/1/boards/' + boardId + '/cards', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+  }
+
+  getMembersOfBoard(boardId, options, callback){
+    let generatedParams = generateOptionsAndCallback(options, callback);
+    return wrapRequest('GET', '/1/boards/' + boardId + '/members', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+  }
+
+  addListToBoard(boardId, name, options, callback){
+    let generatedParams = generateOptionsAndCallback(options, callback);
+    generatedParams.options.name = name;
+    return wrapRequest('POST', '/1/boards/', + boardId + '/lists', mergeOptions(this.queryOptions, generatedParams.options), generatedParams.callback);
+  }
+
+  /*///////////////////////////////////////////////////
+              _      _     _       
+             | |    (_)   | |      
+             | |     _ ___| |_ ___ 
+             | |    | / __| __/ __|
+             | |____| \__ \ |_\__ \
+             |______|_|___/\__|___/
+                                  
+   *///////////////////////////////////////////////////
+  
+  getListById(listId, options, callback){
+    let generatedParams = generateOptionsAndCallback(options, callback);
+    return wrapRequest('GET', '/1/boards/' + boardId + '/lists', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+  }
+  getCardsOfList(boardId, listId, options, callback){
+    let generatedParams = generateOptionsAndCallback(options, callback);
+    return wrapRequest('GET', '/1/boards/' + boardId + '/lists/' + listid + '/cards', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+  }
+  
+  /*///////////////////////////////////////////////////
+               _____              _     
+              / ____|            | |    
+             | |     __ _ _ __ __| |___ 
+             | |    / _` | '__/ _` / __|
+             | |___| (_| | | | (_| \__ \
+              \_____\__,_|_|  \__,_|___/
+                                                                          
+   *///////////////////////////////////////////////////
 }
 </code></pre>
         </article>
@@ -141,13 +232,13 @@ export default class Trellode{
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Trellode.html">Trellode</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Trellode.html">Trellode</a></li></ul><h3>Classes</h3><ul><li><a href="module-Trellode-Trellode.html">Trellode</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Sat Jul 11 2015 18:18:38 GMT-0500 (CDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Sun Jul 12 2015 00:48:18 GMT-0500 (CDT)
 </footer>
 
 <script> prettyPrint(); </script>

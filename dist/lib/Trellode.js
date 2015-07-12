@@ -45,7 +45,7 @@ function sendRequest(method, endpoint, options) {
  * @return {Promise|undefined} Callback specifed: undefined, else: Promise
  */
 function wrapRequest(method, endpoint, options, callback) {
-  if (cb) {
+  if (callback) {
     sendRequest(method, endpoint, options).then(callback);
   } else {
     return sendRequest(method, endpoint, options);
@@ -81,7 +81,7 @@ function generateOptionsAndCallback(options, callback) {
 
   if (typeof options === 'object') {
     ret.options = options;
-    if (cb) {
+    if (callback) {
       ret.callback = callback;
     }
   } else {
@@ -94,6 +94,14 @@ function generateOptionsAndCallback(options, callback) {
 }
 
 var Trellode = (function () {
+  /**
+   * @module  Trellode
+   * @constructs Trellode
+   * @param  {string} key - Trello API key
+   * @param  {string} token - Access token
+   * @return {Trellode}
+   */
+
   function Trellode(key, token) {
     _classCallCheck(this, Trellode);
 
@@ -107,7 +115,7 @@ var Trellode = (function () {
       return { key: this.key, token: this.token };
     }
   }, {
-    key: 'getBoardsOfMember',
+    key: 'getMemberByIdOrUsername',
 
     /*///////////////////////////////////////////////////
             __  __                _                   
@@ -118,6 +126,26 @@ var Trellode = (function () {
            |_|  |_|\___|_| |_| |_|_.__/ \___|_|  |___/
                                     
      */ //////////////////////////////////////////////////
+
+    /**
+     * @memberof Trellode
+     * @function getMemberByIdOrUsername
+     * @param  {string} idOrUsername - The ID or Username of the member
+     * @param  {object} [options]
+     * @param  {Function} [callback]
+     * @return {Promise|undefined}
+     */
+    value: function getMemberByIdOrUsername(idOrUsername, options, callback) {
+      var generatedParams = generateOptionsAndCallback(options, callback);
+      return wrapRequest('GET', '/1/members/' + idOrUsername, mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+    }
+  }, {
+    key: 'getBoards',
+    value: function getBoards(options, callback) {
+      return this.getBoardsOfMember('me', options, callback);
+    }
+  }, {
+    key: 'getBoardsOfMember',
     value: function getBoardsOfMember(memberId, options, callback) {
       var generatedParams = generateOptionsAndCallback(options, callback);
       return wrapRequest('GET', '/1/members/' + memberId + '/boards', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
@@ -127,7 +155,7 @@ var Trellode = (function () {
     value: function createBoard(name, options, callback) {
       var generatedParams = generateOptionsAndCallback(options, callback);
       generatedParams.options.name = name;
-      return wrapRequest('POST', '/1/boards', mergeOptions(this.queryOptions, generatedParams.options), generatedParams.callback);
+      return wrapRequest('POST', '/1/boards', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
     key: 'getListsOfBoard',
@@ -163,10 +191,10 @@ var Trellode = (function () {
     value: function addListToBoard(boardId, name, options, callback) {
       var generatedParams = generateOptionsAndCallback(options, callback);
       generatedParams.options.name = name;
-      return wrapRequest('POST', '/1/boards/', +boardId + '/lists', mergeOptions(this.queryOptions, generatedParams.options), generatedParams.callback);
+      return wrapRequest('POST', '/1/boards/' + boardId + '/lists', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
-    key: 'getCardsOfList',
+    key: 'getListById',
 
     /*///////////////////////////////////////////////////
                 _      _     _       
@@ -178,10 +206,28 @@ var Trellode = (function () {
                                     
      */ //////////////////////////////////////////////////
 
-    value: function getCardsOfList(boardId, listId, options, callback) {
+    value: function getListById(listId, options, callback) {
       var generatedParams = generateOptionsAndCallback(options, callback);
-      return wrapRequest('GET', '/1/boards/' + boardId + '/lists/' + listid + '/cards', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+      return wrapRequest('GET', '/1/lists/' + listId, mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
+  }, {
+    key: 'getCardsOfList',
+    value: function getCardsOfList(listId, options, callback) {
+      var generatedParams = generateOptionsAndCallback(options, callback);
+      return wrapRequest('GET', '/1/lists/' + listId + '/cards', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+    }
+  }, {
+    key: 'addCardToList',
+    value: function addCardToList(listId, name, options, callback) {
+      var generatedParams = generateOptionsAndCallback(options, callback);
+      generatedParams.options.name = name;
+      if (!generatedParams.options.due) {
+        generatedParams.options.due = null;
+      }
+      return wrapRequest('POST', '/1/lists/' + listId + '/cards', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+    }
+  }, {
+    key: 'getCardById',
 
     /*///////////////////////////////////////////////////
                  _____              _     
@@ -193,6 +239,16 @@ var Trellode = (function () {
                                                                             
      */ //////////////////////////////////////////////////
 
+    value: function getCardById(cardId, options, callback) {
+      var generatedParams = generateOptionsAndCallback(options, callback);
+      return wrapRequest('GET', '/1/cards/' + cardId, mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+    }
+  }, {
+    key: 'getChecklistsOnCard',
+    value: function getChecklistsOnCard(cardId, options, callback) {
+      var generatedParams = generateOptionsAndCallback(options, callback);
+      return wrapRequest('GET', '/1/cards/' + cardId + '/checklists', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+    }
   }]);
 
   return Trellode;

@@ -1,0 +1,8 @@
+{
+    "source": {
+        "includePattern": "./lib/Trellode.js"
+    },
+    "opts": {
+        "destination": "./docs"
+    }
+}
