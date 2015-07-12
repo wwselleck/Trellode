@@ -1,5 +1,5 @@
 # Trellode
-[![Build Status](https://travis-ci.org/wwselleck/Trellode.svg?branch=master)](https://travis-ci.org/wwselleck/Trellode)
+[![npm version](https://badge.fury.io/js/trellode.svg)](http://badge.fury.io/js/trellode) [![Build Status](https://travis-ci.org/wwselleck/Trellode.svg?branch=master)](https://travis-ci.org/wwselleck/Trellode)
 
 [Interestingly enough, Trello has a Trello board for development of the Trello API](https://trello.com/b/cI66RoQS/trello-public-api). 
 
