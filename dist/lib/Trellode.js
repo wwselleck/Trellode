@@ -107,7 +107,30 @@ var Trellode = (function () {
       return { key: this.key, token: this.token };
     }
   }, {
-    key: 'getBoards',
+    key: 'getBoardsOfMember',
+
+    /*///////////////////////////////////////////////////
+            __  __                _                   
+           |  \/  |              | |                  
+           | \  / | ___ _ __ ___ | |__   ___ _ __ ___ 
+           | |\/| |/ _ \ '_ ` _ \| '_ \ / _ \ '__/ __|
+           | |  | |  __/ | | | | | |_) |  __/ |  \__ \
+           |_|  |_|\___|_| |_| |_|_.__/ \___|_|  |___/
+                                    
+     */ //////////////////////////////////////////////////
+    value: function getBoardsOfMember(memberId, options, callback) {
+      var generatedParams = generateOptionsAndCallback(options, callback);
+      return wrapRequest('GET', '/1/members/' + memberId + '/boards', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+    }
+  }, {
+    key: 'createBoard',
+    value: function createBoard(name, options, callback) {
+      var generatedParams = generateOptionsAndCallback(options, callback);
+      generatedParams.options.name = name;
+      return wrapRequest('POST', '/1/boards', mergeOptions(this.queryOptions, generatedParams.options), generatedParams.callback);
+    }
+  }, {
+    key: 'getListsOfBoard',
 
     /*///////////////////////////////////////////////////
             ____                      _     
@@ -119,15 +142,15 @@ var Trellode = (function () {
                                     
      */ //////////////////////////////////////////////////
 
-    value: function getBoards(memberId, options, callback) {
-      var generatedParams = generateOptionsAndCallback(options, callback);
-      return wrapRequest('GET', '/1/members/' + memberId + '/boards', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
-    }
-  }, {
-    key: 'getListsOfBoard',
     value: function getListsOfBoard(boardId, options, callback) {
       var generatedParams = generateOptionsAndCallback(options, callback);
       return wrapRequest('GET', '/1/boards/' + boardId + '/lists', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+    }
+  }, {
+    key: 'getCardsOfBoard',
+    value: function getCardsOfBoard(boardId, options, callback) {
+      var generatedParams = generateOptionsAndCallback(options, callback);
+      return wrapRequest('GET', '/1/boards/' + boardId + '/cards', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
     key: 'getMembersOfBoard',
@@ -136,12 +159,40 @@ var Trellode = (function () {
       return wrapRequest('GET', '/1/boards/' + boardId + '/members', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
-    key: 'createBoard',
-    value: function createBoard(name, options, callback) {
+    key: 'addListToBoard',
+    value: function addListToBoard(boardId, name, options, callback) {
       var generatedParams = generateOptionsAndCallback(options, callback);
       generatedParams.options.name = name;
-      return wrapRequest('POST', '/1/boards', mergeOptions(this.queryOptions, generatedParams.options), generatedParams.callback);
+      return wrapRequest('POST', '/1/boards/', +boardId + '/lists', mergeOptions(this.queryOptions, generatedParams.options), generatedParams.callback);
     }
+  }, {
+    key: 'getCardsOfList',
+
+    /*///////////////////////////////////////////////////
+                _      _     _       
+               | |    (_)   | |      
+               | |     _ ___| |_ ___ 
+               | |    | / __| __/ __|
+               | |____| \__ \ |_\__ \
+               |______|_|___/\__|___/
+                                    
+     */ //////////////////////////////////////////////////
+
+    value: function getCardsOfList(boardId, listId, options, callback) {
+      var generatedParams = generateOptionsAndCallback(options, callback);
+      return wrapRequest('GET', '/1/boards/' + boardId + '/lists/' + listid + '/cards', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+    }
+
+    /*///////////////////////////////////////////////////
+                 _____              _     
+                / ____|            | |    
+               | |     __ _ _ __ __| |___ 
+               | |    / _` | '__/ _` / __|
+               | |___| (_| | | | (_| \__ \
+                \_____\__,_|_|  \__,_|___/
+                                                                            
+     */ //////////////////////////////////////////////////
+
   }]);
 
   return Trellode;
