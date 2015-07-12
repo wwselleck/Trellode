@@ -13,3 +13,6 @@ trello.getBoards('me', function(boards){
 	console.log(boards);
 });
 console.log();
+
+console.log('createBoard');
+console.log('Return type: ' + trello.createBoard);
