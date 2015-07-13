@@ -256,6 +256,18 @@ var Trellode = (function () {
       return wrapRequest('GET', '/1/cards/' + cardId + '/checklists', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
+    key: 'openCard',
+    value: function openCard(cardId, callback) {
+      var options = { value: false };
+      return wrapRequest('PUT', '/1/cards/' + cardId + '/closed', mergeOptions(this.queryOptions(), options), callback);
+    }
+  }, {
+    key: 'closeCard',
+    value: function closeCard(cardId, callback) {
+      var options = { value: true };
+      return wrapRequest('PUT', '/1/cards/' + cardId + '/closed', mergeOptions(this.queryOptions(), options), callback);
+    }
+  }, {
     key: 'getChecklistById',
 
     /*///////////////////////////////////////////////////
