@@ -255,6 +255,23 @@ var Trellode = (function () {
       var generatedParams = generateOptionsAndCallback(options, callback);
       return wrapRequest('GET', '/1/cards/' + cardId + '/checklists', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
+  }, {
+    key: 'getChecklistById',
+
+    /*///////////////////////////////////////////////////
+       _____ _               _    _ _     _       
+      / ____| |             | |  | (_)   | |      
+     | |    | |__   ___  ___| | _| |_ ___| |_ ___ 
+     | |    | '_ \ / _ \/ __| |/ / | / __| __/ __|
+     | |____| | | |  __/ (__|   <| | \__ \ |_\__ \
+      \_____|_| |_|\___|\___|_|\_\_|_|___/\__|___/
+                                                                                                                               
+    */ //////////////////////////////////////////////////
+
+    value: function getChecklistById(checklistId, options, callback) {
+      var generatedParams = generateOptionsAndCallback(options, callback);
+      return wrapRequest('GET', '/1/checklists/' + checklistId, mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+    }
   }]);
 
   return Trellode;
