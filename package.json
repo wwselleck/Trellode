@@ -1,9 +1,28 @@
 {
   "name": "trellode",
   "version": "0.1.0",
+  "description": "Node.js wrapper for the Trello API",
   "license": "MIT",
   "repository": "wwselleck/Trellode",
-  "author": "Weston Selleck",
+  "author": {
+    "name": "Weston Selleck",
+    "email": "wwselleck@gmail.com",
+    "url": "http://westonselleck.com"
+  },
+    "keywords": [
+    "trello",
+    "wrapper",
+    "api",
+    "rest",
+    "restful",
+    "http",
+    "node",
+    "es6",
+    "promise",
+    "es2015",
+    "npm",
+    "javascript"
+  ],
   "engines": {
     "node": ">=0.8.0"
   },
