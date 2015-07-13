@@ -181,6 +181,16 @@ var Trellode = (function () {
       return wrapRequest('GET', '/1/boards/' + boardId + '/cards', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
+    key: 'getOpenCardsOnBoard',
+    value: function getOpenCardsOnBoard(boardId, options, callback) {
+      return this.getCardsOfBoard(boardId, mergeOptions(options, { filter: 'open' }), callback);
+    }
+  }, {
+    key: 'getClosedCardsOnBoard',
+    value: function getClosedCardsOnBoard(boardId, options, callback) {
+      return this.getCardsOfBoard(boardId, mergeOptions(options, { filter: 'closed' }), callback);
+    }
+  }, {
     key: 'getMembersOfBoard',
     value: function getMembersOfBoard(boardId, options, callback) {
       var generatedParams = generateOptionsAndCallback(options, callback);
