@@ -153,8 +153,8 @@ var Trellode = (function () {
       return wrapRequest('GET', '/1/members/' + memberId + '/boards', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
-    key: 'getNotifications',
-    value: function getNotifications(memberIdOrUsername, options, callback) {
+    key: 'getNotificationsOfMember',
+    value: function getNotificationsOfMember(memberIdOrUsername, options, callback) {
       var generatedParams = generateOptionsAndCallback(options, callback);
       return wrapRequest('GET', '/1/members/' + memberIdOrUsername + '/notifications', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
