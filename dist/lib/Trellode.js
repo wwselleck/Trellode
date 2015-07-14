@@ -135,13 +135,15 @@ var Trellode = (function () {
      * @param  {Function} [callback]
      * @return {Promise|undefined}
      */
-    value: function getMemberByIdOrUsername(idOrUsername, options, callback) {
+    value: function getMemberByIdOrUsername(memberIdOrUsername, options, callback) {
       var generatedParams = generateOptionsAndCallback(options, callback);
-      return wrapRequest('GET', '/1/members/' + idOrUsername, mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+      return wrapRequest('GET', '/1/members/' + memberIdOrUsername, mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
-    key: 'getBoards',
-    value: function getBoards(options, callback) {
+    key: 'getMyBoards',
+
+    //Shortcut for getting boards of member 'me'
+    value: function getMyBoards(options, callback) {
       return this.getBoardsOfMember('me', options, callback);
     }
   }, {
@@ -149,6 +151,12 @@ var Trellode = (function () {
     value: function getBoardsOfMember(memberId, options, callback) {
       var generatedParams = generateOptionsAndCallback(options, callback);
       return wrapRequest('GET', '/1/members/' + memberId + '/boards', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+    }
+  }, {
+    key: 'getNotifications',
+    value: function getNotifications(memberIdOrUsername, options, callback) {
+      var generatedParams = generateOptionsAndCallback(options, callback);
+      return wrapRequest('GET', '/1/members/' + memberIdOrUsername + '/notifications', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
     key: 'createBoard',
