@@ -159,6 +159,12 @@ var Trellode = (function () {
       return wrapRequest('GET', '/1/members/' + memberIdOrUsername + '/notifications', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
+    key: 'getOrganizationsOfMember',
+    value: function getOrganizationsOfMember(memberIdOrUsername, options, callback) {
+      var generatedParams = generateOptionsAndCallback(options, callback);
+      return wrapRequest('GET', '/1/members/' + memberIdOrUsername + '/organizations', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+    }
+  }, {
     key: 'createBoard',
     value: function createBoard(name, options, callback) {
       var generatedParams = generateOptionsAndCallback(options, callback);
