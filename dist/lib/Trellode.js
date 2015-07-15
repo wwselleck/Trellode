@@ -46,7 +46,9 @@ function sendRequest(method, endpoint, options) {
  */
 function wrapRequest(method, endpoint, options, callback) {
   if (callback) {
-    sendRequest(method, endpoint, options).then(callback);
+    sendRequest(method, endpoint, options).then(function (res) {
+      callback(null, res);
+    });
   } else {
     return sendRequest(method, endpoint, options);
   }
@@ -162,7 +164,7 @@ var Trellode = (function () {
     key: 'getOrganizationsOfMember',
     value: function getOrganizationsOfMember(memberIdOrUsername, options, callback) {
       var generatedParams = generateOptionsAndCallback(options, callback);
-      return wrapRequest('GET', '/1/members/' + memberIdOrUsername + '/organizations', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+      return wrapRequest('GET', '/1/members/' + memberIdOrUsername + '/organizationsg', mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
     key: 'createBoard',
