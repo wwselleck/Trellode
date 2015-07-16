@@ -209,8 +209,8 @@ var Trellode = (function () {
       return this.net.request('GET', '/1/cards/' + cardId, Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
-    key: 'getChecklistsOnCard',
-    value: function getChecklistsOnCard(cardId, options, callback) {
+    key: 'getChecklistsOfCard',
+    value: function getChecklistsOfCard(cardId, options, callback) {
       var generatedParams = Util.generateOptionsAndCallback(options, callback);
       return this.net.request('GET', '/1/cards/' + cardId + '/checklists', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
@@ -242,6 +242,14 @@ var Trellode = (function () {
     value: function getChecklistById(checklistId, options, callback) {
       var generatedParams = Util.generateOptionsAndCallback(options, callback);
       return this.net.request('GET', '/1/checklists/' + checklistId, Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+    }
+  }, {
+    key: 'checkItemOfChecklist',
+    value: function checkItemOfChecklist(checkItemName, checklistId, options, callback) {
+      var generatedParams = Util.generateOptionsAndCallback(options, callback);
+      generatedParams.name = checkItemName;
+      generatedParams.checked = 'true';
+      return this.net.request('POST', '/1/checklists/' + checklistId + '/checkItems', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }]);
 
