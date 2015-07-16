@@ -36,7 +36,7 @@ trelloApi.getBoards().then(function(boards){
 });
 
 //Using callbacks
-trelloApi.getBoards(function(boards){
+trelloApi.getBoards(function(err, boards){
   console.log(boards);
 });
 ```
