@@ -15,7 +15,3 @@ trello.getBoards({filter: 'open'}).then(function(boards){
 			});
 		});
 });
-
-trello.checkItemOfChecklist('Salsa', '559c1d05776922c6b99e70e6').then(function(res){
-    console.log(res);
-});
