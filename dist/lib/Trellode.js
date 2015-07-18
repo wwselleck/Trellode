@@ -251,12 +251,6 @@ var Trellode = (function () {
       generatedParams.checked = 'true';
       return this.net.request('POST', '/1/checklists/' + checklistId + '/checkItems', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
-  }, {
-    key: 'addAttachment',
-    value: function addAttachment(cardId, callback) {
-      var options = { value: true };
-      return this.net.request('POST', '/1/cards/' + cardId + '/attachments', Util.mergeOptions(this.queryOptions(), options), callback);
-    }
   }]);
 
   return Trellode;
