@@ -97,7 +97,7 @@ var Trellode = (function () {
     key: 'getOrganizationsOfMember',
     value: function getOrganizationsOfMember(memberIdOrUsername, options, callback) {
       var generatedParams = Util.generateOptionsAndCallback(options, callback);
-      return this.net.request('GET', '/1/members/' + memberIdOrUsername + '/organizationsg', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+      return this.net.request('GET', '/1/members/' + memberIdOrUsername + '/organizations', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
     key: 'createBoard',
@@ -250,6 +250,12 @@ var Trellode = (function () {
       generatedParams.name = checkItemName;
       generatedParams.checked = 'true';
       return this.net.request('POST', '/1/checklists/' + checklistId + '/checkItems', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+    }
+  }, {
+    key: 'addAttachment',
+    value: function addAttachment(cardId, callback) {
+      var options = { value: true };
+      return this.net.request('POST', '/1/cards/' + cardId + '/attachments', Util.mergeOptions(this.queryOptions(), options), callback);
     }
   }]);
 
