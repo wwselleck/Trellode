@@ -97,7 +97,7 @@ var Trellode = (function () {
     key: 'getOrganizationsOfMember',
     value: function getOrganizationsOfMember(memberIdOrUsername, options, callback) {
       var generatedParams = Util.generateOptionsAndCallback(options, callback);
-      return this.net.request('GET', '/1/members/' + memberIdOrUsername + '/organizationsg', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+      return this.net.request('GET', '/1/members/' + memberIdOrUsername + '/organizations', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
     key: 'createBoard',
