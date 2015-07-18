@@ -247,8 +247,8 @@ var Trellode = (function () {
     key: 'checkItemOfChecklist',
     value: function checkItemOfChecklist(checkItemName, checklistId, options, callback) {
       var generatedParams = Util.generateOptionsAndCallback(options, callback);
-      generatedParams.name = checkItemName;
-      generatedParams.checked = 'true';
+      generatedParams.options.name = checkItemName;
+      generatedParams.options.checked = 'true';
       return this.net.request('POST', '/1/checklists/' + checklistId + '/checkItems', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }]);
