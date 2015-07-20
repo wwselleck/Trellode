@@ -27,7 +27,9 @@ var Trellode = (function () {
 
     this.key = key;
     this.token = token;
-    this.net = new Net('https://api.trello.com');
+    this.apiVersion = '1';
+    console.log(this.apiVersion);
+    this.net = new Net('https://api.trello.com/' + this.apiVersion);
   }
 
   _createClass(Trellode, [{
@@ -58,7 +60,7 @@ var Trellode = (function () {
      */
     value: function getMemberByIdOrUsername(memberIdOrUsername, options, callback) {
       var generatedParams = Util.generateOptionsAndCallback(options, callback);
-      return this.net.request('GET', '/1/members/' + memberIdOrUsername, Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+      return this.net.request('GET', '/members/' + memberIdOrUsername, Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
     key: 'getBoards',
@@ -71,7 +73,7 @@ var Trellode = (function () {
     key: 'getBoardsOfMember',
     value: function getBoardsOfMember(memberId, options, callback) {
       var generatedParams = Util.generateOptionsAndCallback(options, callback);
-      return this.net.request('GET', '/1/members/' + memberId + '/boards', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+      return this.net.request('GET', '/members/' + memberId + '/boards', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
     key: 'getNotifications',
@@ -84,7 +86,7 @@ var Trellode = (function () {
     key: 'getNotificationsOfMember',
     value: function getNotificationsOfMember(memberIdOrUsername, options, callback) {
       var generatedParams = Util.generateOptionsAndCallback(options, callback);
-      return this.net.request('GET', '/1/members/' + memberIdOrUsername + '/notifications', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+      return this.net.request('GET', '/members/' + memberIdOrUsername + '/notifications', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
     key: 'getOrganizations',
@@ -97,14 +99,14 @@ var Trellode = (function () {
     key: 'getOrganizationsOfMember',
     value: function getOrganizationsOfMember(memberIdOrUsername, options, callback) {
       var generatedParams = Util.generateOptionsAndCallback(options, callback);
-      return this.net.request('GET', '/1/members/' + memberIdOrUsername + '/organizations', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+      return this.net.request('GET', '/members/' + memberIdOrUsername + '/organizations', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
     key: 'createBoard',
     value: function createBoard(name, options, callback) {
       var generatedParams = Util.generateOptionsAndCallback(options, callback);
       generatedParams.options.name = name;
-      return this.net.request('POST', '/1/boards', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+      return this.net.request('POST', '/boards', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
     key: 'getListsOfBoard',
@@ -121,13 +123,13 @@ var Trellode = (function () {
 
     value: function getListsOfBoard(boardId, options, callback) {
       var generatedParams = Util.generateOptionsAndCallback(options, callback);
-      return this.net.request('GET', '/1/boards/' + boardId + '/lists', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+      return this.net.request('GET', '/boards/' + boardId + '/lists', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
     key: 'getCardsOfBoard',
     value: function getCardsOfBoard(boardId, options, callback) {
       var generatedParams = Util.generateOptionsAndCallback(options, callback);
-      return this.net.request('GET', '/1/boards/' + boardId + '/cards', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+      return this.net.request('GET', '/boards/' + boardId + '/cards', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
     key: 'getOpenCardsOnBoard',
@@ -143,20 +145,20 @@ var Trellode = (function () {
     key: 'getMembersOfBoard',
     value: function getMembersOfBoard(boardId, options, callback) {
       var generatedParams = Util.generateOptionsAndCallback(options, callback);
-      return this.net.request('GET', '/1/boards/' + boardId + '/members', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+      return this.net.request('GET', '/boards/' + boardId + '/members', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
     key: 'getLabelsOfBoard',
     value: function getLabelsOfBoard(boardId, options, callback) {
       var generatedParams = Util.generateOptionsAndCallback(options, callback);
-      return this.net.request('GET', '/1/boards/' + boardId + '/labels', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+      return this.net.request('GET', '/boards/' + boardId + '/labels', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
     key: 'addListToBoard',
     value: function addListToBoard(boardId, name, options, callback) {
       var generatedParams = Util.generateOptionsAndCallback(options, callback);
       generatedParams.options.name = name;
-      return this.net.request('POST', '/1/boards/' + boardId + '/lists', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+      return this.net.request('POST', '/boards/' + boardId + '/lists', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
     key: 'getListById',
@@ -173,13 +175,13 @@ var Trellode = (function () {
 
     value: function getListById(listId, options, callback) {
       var generatedParams = Util.generateOptionsAndCallback(options, callback);
-      return this.net.request('GET', '/1/lists/' + listId, Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+      return this.net.request('GET', '/lists/' + listId, Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
     key: 'getCardsOfList',
     value: function getCardsOfList(listId, options, callback) {
       var generatedParams = Util.generateOptionsAndCallback(options, callback);
-      return this.net.request('GET', '/1/lists/' + listId + '/cards', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+      return this.net.request('GET', '/lists/' + listId + '/cards', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
     key: 'addCardToList',
@@ -189,7 +191,7 @@ var Trellode = (function () {
       if (!generatedParams.options.due) {
         generatedParams.options.due = null;
       }
-      return this.net.request('POST', '/1/lists/' + listId + '/cards', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+      return this.net.request('POST', '/lists/' + listId + '/cards', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
     key: 'getCardById',
@@ -206,25 +208,34 @@ var Trellode = (function () {
 
     value: function getCardById(cardId, options, callback) {
       var generatedParams = Util.generateOptionsAndCallback(options, callback);
-      return this.net.request('GET', '/1/cards/' + cardId, Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+      return this.net.request('GET', '/cards/' + cardId, Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
     key: 'getChecklistsOfCard',
     value: function getChecklistsOfCard(cardId, options, callback) {
       var generatedParams = Util.generateOptionsAndCallback(options, callback);
-      return this.net.request('GET', '/1/cards/' + cardId + '/checklists', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+      return this.net.request('GET', '/cards/' + cardId + '/checklists', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+    }
+  }, {
+    key: 'changeNameOfCard',
+    value: function changeNameOfCard(cardId, name, options, callback) {
+      var generatedParams = Util.generateOptionsAndCallback(options, callback);
+      generatedParams.options.value = name;
+      var url = ['/cards/', cardId, '/name'].join('');
+      var reqParams = Util.mergeOptions(this.queryOptions(), generatedParams.options);
+      return this.net.request('PUT', url, reqParams, generatedParams.callback);
     }
   }, {
     key: 'openCard',
     value: function openCard(cardId, callback) {
       var options = { value: false };
-      return this.net.request('PUT', '/1/cards/' + cardId + '/closed', Util.mergeOptions(this.queryOptions(), options), callback);
+      return this.net.request('PUT', '/cards/' + cardId + '/closed', Util.mergeOptions(this.queryOptions(), options), callback);
     }
   }, {
     key: 'closeCard',
     value: function closeCard(cardId, callback) {
       var options = { value: true };
-      return this.net.request('PUT', '/1/cards/' + cardId + '/closed', Util.mergeOptions(this.queryOptions(), options), callback);
+      return this.net.request('PUT', '/cards/' + cardId + '/closed', Util.mergeOptions(this.queryOptions(), options), callback);
     }
   }, {
     key: 'getChecklistById',
@@ -241,19 +252,26 @@ var Trellode = (function () {
 
     value: function getChecklistById(checklistId, options, callback) {
       var generatedParams = Util.generateOptionsAndCallback(options, callback);
-      return this.net.request('GET', '/1/checklists/' + checklistId, Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+      return this.net.request('GET', '/checklists/' + checklistId, Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }, {
-    key: 'completeChecklistItem',
+    key: 'markChecklistItemAsComplete',
 
     // From what I can tell, Trello's API is a state of terrible where you need
     // to specify a cardId, listId, and checklistItemId to change the state
     // of a checklist item (https://trello.com/docs/api/card/index.html#put-1-cards-card-id-or-shortlink-checklist-idchecklist-checkitem-idcheckitem-state)
     // Opinion wanted: ordering of these parameters
-    value: function completeChecklistItem(checkItemId, checklistId, cardId, options, callback) {
+    value: function markChecklistItemAsComplete(checkItemId, checklistId, cardId, options, callback) {
       var generatedParams = Util.generateOptionsAndCallback(options, callback);
       generatedParams.options.value = 'complete';
-      return this.net.request('PUT', '/1/cards/' + cardId + '/checklist/' + checklistId + '/checkItem/' + checkItemId + '/state', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+      return this.net.request('PUT', '/cards/' + cardId + '/checklist/' + checklistId + '/checkItem/' + checkItemId + '/state', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
+    }
+  }, {
+    key: 'markChecklistItemAsIncomplete',
+    value: function markChecklistItemAsIncomplete(checkItemId, checklistId, cardId, options, callback) {
+      var generatedParams = Util.generateOptionsAndCallback(options, callback);
+      generatedParams.options.value = 'incomplete';
+      return this.net.request('PUT', '/cards/' + cardId + '/checklist/' + checklistId + '/checkItem/' + checkItemId + '/state', Util.mergeOptions(this.queryOptions(), generatedParams.options), generatedParams.callback);
     }
   }]);
 
