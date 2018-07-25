@@ -1,3 +1,6 @@
+## Deprecated
+This project is not maintained. If you liked the simplicity of this library as simple wrapper functions around the various API endpoints, I recommend using [norberteder/trello](https://github.com/norberteder/trello).
+
 # Trellode
 [![npm version](https://badge.fury.io/js/trellode.svg)](http://badge.fury.io/js/trellode) [![Build Status](https://travis-ci.org/wwselleck/Trellode.svg?branch=master)](https://travis-ci.org/wwselleck/Trellode)
 
